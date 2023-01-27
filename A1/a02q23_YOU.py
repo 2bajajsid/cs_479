@@ -305,6 +305,7 @@ class Logistic(Operation):
         '''
         #===== YOUR CODE HERE =====
         self.dims = z.shape
+        self.z = z
         return 1 / (1 + np.exp(-1 * z))  # replace this line
     
     def derivative(self, s=None):
@@ -333,7 +334,7 @@ class Logistic(Operation):
         if s is None:
             return np.ones(self.dims) 
         else:
-            return np.exp(-1 * s) / (1 + np.exp(-1 * s))**2
+            return s * (np.exp(-1 * self.z) / (1 + np.exp(-1 * self.z))**2)
 
 act = Logistic()
 #print(act(np.array([0., 0.5])))
@@ -562,7 +563,7 @@ class Network(object):
         return x
 
 
-    def backprop(self, t, lrate=1.):
+    def backprop(self, t, lrate=1.0):
         '''
          net.backprop(t, lrate=1.)
          
@@ -621,7 +622,7 @@ class Network(object):
             post.L1.b -= (lrate * dEdb[0])
         
         
-    def learn(self, ds, lrate=1., epochs=10):
+    def learn(self, ds, lrate=1., epochs=5000):
         '''
          net.Learn(ds, lrate=1., epochs=10)
 
@@ -638,9 +639,6 @@ class Network(object):
         # You will have to edit all these lines.
 
         #=== MIGHT I INTEREST YOU IN ADDING SOME CODE HERE? ===
-        
-        
-
         loss_history = []  # for plotting
         for epoch in range(epochs):
             
@@ -651,7 +649,7 @@ class Network(object):
             
             # Give the poor user some feedback so they know something
             # is happening. :)
-            if epoch%2==0:
+            if epoch%100==0:
                 cost = self.loss(network_output, ds.targets())
                 loss_history.append(cost)
                 print(f'{epoch}: cost = {cost}')
@@ -689,7 +687,7 @@ net.add_layer(output_layer)
 
 # +
 # Train the network
-loss_history = net.learn(ds);
+loss_history = net.learn(ds, epochs=5000);
 
 # Plot the progress of the cost
 plt.plot(loss_history);
