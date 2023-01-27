@@ -388,14 +388,12 @@ class CrossEntropy(Operation):
            dEdy  array the same size as y when __call__ was called
         '''
         #===== YOUR CODE HERE =====
-        return -((self.t / self.y) + (1-self.t)/(1-self.y)) / len(self.t)   # replace this line
+        return -((self.t / self.y) - (1-self.t)/(1-self.y)) / len(self.t)   # replace this line
 
 E = CrossEntropy()
 y = np.array([0.21, 0.89, 0.11])
 t = np.array([0, 1, 0])
 loss = E(y, t)
-print(loss)
-print(E.derivative())
 
 
 # + [markdown] heading_collapsed=true
@@ -563,7 +561,7 @@ class Network(object):
         return x
 
 
-    def backprop(self, t, lrate=1.0):
+    def backprop(self, t, lrate=1.):
         '''
          net.backprop(t, lrate=1.)
          
@@ -638,6 +636,8 @@ class Network(object):
         # TODO: Complete the code below.
         # You will have to edit all these lines.
 
+        #targets = ds.targets()[:, [0]]
+
         #=== MIGHT I INTEREST YOU IN ADDING SOME CODE HERE? ===
         loss_history = []  # for plotting
         for epoch in range(epochs):
@@ -706,6 +706,7 @@ ds.plot(labels=y)
 
 # ## Accuracy of your model
 
+# +
 def accuracy(y, t):
     '''
      ac = accuracy(y, t)
@@ -727,8 +728,31 @@ def accuracy(y, t):
     acc = errors / len(ds)    # divide by the total number of samples
     return acc
 
+def accuracy_2(y, t):
+    '''
+     ac = accuracy(y, t)
+     
+     Calculates the fraction of correctly classified samples.
+     A sample is classified correctly if the largest element
+     in y corresponds to where the 1 is in the target.
+     
+     Inputs:
+       y  a batch of outputs, with one sample per row
+       t  the corresponding batch of targets
+       
+     Output:
+       ac the fraction of correct classifications (0<=ac<=1)
+    '''
+    targets = ds.targets()[:, [0]]
+    y = np.rint(y)
+
+    errors = sum(y==targets)  # add up how many times they match
+    acc = errors / len(ds)    # divide by the total number of samples
+    return acc
+
+
+# -
 
 ac = accuracy(net(ds.inputs()), ds.targets())
+#ac = accuracy_2(net(ds.inputs()), ds.targets())
 print(f"Your model's training accuracy = {ac*100}%")
-
-
