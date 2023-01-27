@@ -1,0 +1,324 @@
+%% LyX 2.0.4 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[11pt,english,letterpaper]{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{upgreek}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength{\parskip}{\bigskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{babel}
+\usepackage{graphicx}
+\usepackage{enumerate}
+%\usepackage{subcaption}
+\usepackage{float}
+\usepackage[caption = false]{subfig}
+
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 1},backref=section,colorlinks=false]
+ {hyperref}
+\hypersetup{pdftex,colorlinks,urlcolor=blue}
+\usepackage{multicol}
+\usepackage{hyperref}
+
+\makeatletter
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+
+\usepackage{palatino}
+\usepackage{parskip}
+\usepackage{xcolor}
+\usepackage{float}
+%\usepackage{wrapf
+\usepackage[normalem]{ulem}
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage{ifthen}
+
+
+
+% To wrap text around figures
+%\begin{wrapfigure}{r}{0.25\textwidth} %this figure will be at the right
+%    \centering
+%    \includegraphics[width=0.25\textwidth]{mesh}
+%\end{wrapfigure}
+
+
+% hyperlinks setup
+
+
+\DeclareUrlCommand\ULurl@@{%
+  \def\UrlFont{\ttfamily\color{blue}}%
+  \def\UrlLeft{\uline\bgroup}%
+  \def\UrlRight{\egroup}}
+\def\ULurl@#1{\hyper@linkurl{\ULurl@@{#1}}{#1}}
+\DeclareRobustCommand*{\ULurl}{\hyper@normalise\ULurl@}
+
+
+\overfullrule3pt
+ \def\LayoutTextField#1#2{#2} % this drops the label to end up with
+% specific width for \TextField
+
+%%% header %%%
+\usepackage{fancyhdr}
+\lhead{{\footnotesize\sffamily CS 479/679}}
+\chead{Neural Networks}
+\rhead{{\footnotesize\sffamily Assignment 1}}
+\lfoot{{\footnotesize\sffamily \copyright \ Ali Ayub 2023}}
+
+%=========== Footer =========================
+%
+\cfoot{{\footnotesize\sffamily v1.0}}
+%
+%==========================================
+
+\rfoot{{\footnotesize\sffamily Page \thepage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+%%% end header %%%
+
+%%% shaded boxes %%%
+\usepackage{lipsum}\usepackage{framed}
+
+\definecolor{shadecolor}{rgb}{0.9,0.9,0.9}
+\definecolor{mbcolor}{rgb}{0,0,0}
+\definecolor{abcolor}{rgb}{1,1,1}
+\definecolor{ascolor}{rgb}{0.9,0.9,1}
+\newlength{\boxwidth}
+\newsavebox{\boxcontainer}
+
+% Improved version of Stephan_K's \mybox
+% Needs: shadecolor, \boxwidth
+\newcommand{\mybox}[1]{%
+  \setlength{\boxwidth}{\textwidth}
+  \addtolength{\boxwidth}{-2\fboxsep}
+  \addtolength{\boxwidth}{-2\fboxrule}
+  \begin{center}%
+    \fcolorbox{black}{shadecolor}{%
+      \begin{minipage}[t]{\boxwidth}%
+        #1%
+      \end{minipage}}%
+  \end{center}}
+
+% First environment version
+% Needs: shadecolor, \boxwidth, \boxcontainer
+\newenvironment{Mybox}{\setlength{\boxwidth}{\textwidth}
+   \addtolength{\boxwidth}{-2\fboxsep}
+   \addtolength{\boxwidth}{-2\fboxrule}
+   \begin{lrbox}{\boxcontainer}%
+     \begin{minipage}{\boxwidth}}{\end{minipage}\end{lrbox}%
+   \begin{center}%
+     \fcolorbox{black}{shadecolor}{\usebox{\boxcontainer}}
+   \end{center}}
+
+% Second environment version
+% Needs: shadecolor, \boxwidth and the framed package
+\newenvironment{MyBox}{%
+  \def\FrameCommand{\fboxsep=\FrameSep \fboxrule=\FrameRule \fcolorbox{black}{shadecolor}}%
+  \MakeFramed {\setlength{\boxwidth}{\textwidth}
+  \addtolength{\boxwidth}{-2\FrameSep}
+  \addtolength{\boxwidth}{-2\FrameRule}
+  \setlength{\hsize}{\boxwidth} \FrameRestore}}{\endMakeFramed}
+
+% Settings for \mybox and Mybox
+\setlength{\fboxrule}{0pt}
+\setlength{\fboxsep}{9pt}
+
+% Additional settings for MyBox
+\setlength{\FrameRule}{\fboxrule}
+\setlength{\FrameSep}{\fboxsep}
+\def\UrlFont{\bf}
+
+%%% end boxes %%%
+
+% uasge note: \mybox{\lipsum[1]} does not break across pages, this does:
+%
+%\begin{Mybox}
+%  \lipsum[1]
+%\end{Mybox}
+%
+% alterntive is MyBox
+
+
+% My commands
+\renewcommand{\marks}[1]{\ifthenelse{#1=1}{{\bf [#1 mark]}}{{\bf [#1 marks]}}}
+\newcommand{\ignore}[1]{}
+\newcommand{\comment}[1]{}
+\def\real{\mathbb{R}}
+\def\trans{^\mathrm{T}}
+\def\checkbox{$\square$ \ \ \ \ }
+\newcommand{\mli}[1]{\mathit{#1}}
+\def\qspace{2mm}
+\def\TrueFalseBox{{\large [  \quad ]}}  % Used for True/False questions
+\def\TrueFalseSpace{1mm}
+\def\checkspace{11mm}
+\def\nudge{\hspace{4mm}}
+\newcommand{\twovec}[2]{\left[ \begin{array}{c} #1 \\ #2 \end{array} \right]}
+\newcommand{\red}[1]{{\color{red}#1}}
+
+\makeatother
+
+\begin{document}
+
+
+
+
+%*****************************************************************************************
+\begin{center}
+  \large{\textbf{CS479/679: Neural Networks} \\ Assignment 1\\ \red{Due: 11:59 AM (EST), Jan 30, 2023}, submit on LEARN.} \\
+
+Include your name and student number!
+
+\end{center}
+
+\begin{center}
+Submit your writeup in pdf and all source code in a zip file (with proper documentation). Write a script for each programming exercise so that the TAs can easily run and verify your results. Make sure your code runs!
+
+[Text in square brackets are hints that can be ignored.]
+\end{center}
+
+
+
+
+
+
+\bigskip
+
+
+%======== Spiking Networks ==================
+
+{\Large \bf Question 1: LIF Firing Rate (25 pts)}
+Recall that the sub-threshold membrane potential for a LIF neuron is governed by the DE,
+\begin{equation} \label{eq:LIF_DE}
+\uptau \ \frac{dv}{dt} = v_\mathrm{in} - v \ .
+\end{equation}
+
+Show that if the threshold $v_\mathrm{th}$ is 1, and if $v_\mathrm{in}$ is held constant, then the firing rate of a LIF neuron can be computed using
+$$
+G(v_\mathrm{in}) = \left\{ \begin{array}{cl}
+\frac{1}{\uptau_\mathrm{ref} - \uptau \ln \left( 1- \frac{1}{v_\mathrm{in}} \right)} & \quad \text{for } v_\mathrm{in}>1 \\
+0 & \quad \text{otherwise}
+\end{array} \right.
+$$
+
+\emph{Hint}: The time between spikes ($t_\mathrm{isi}$, the ``inter-spike interval'') is the reciprocal of the firing rate, and is also the sum of the refractory time and the time it takes for $v$ to climb from 0 to the threshold of 1.
+
+
+\vspace{1cm}
+
+\hrule
+
+\section*{What to submit}
+For this question, you can:
+\begin{itemize}
+\item typeset your solutions using a word-processing application, such as Microsoft Word, \LaTeX, Google docs, etc., or
+\item write your solutions using a tablet computer, or
+\item write your solutions on paper and take photographs.
+\end{itemize}
+In any case, it is {\bf your responsibility} to make sure that your solutions are sufficiently legible.
+
+
+\clearpage
+%=============== PSC of spike train ===================
+{\Large \bf Question 2: Input Current to the PS Neuron (25 pts)}
+The diagram below shows three neurons on the left: two neurons, A and B, that synapse onto a neuron C with connection weights {\bf -0.5} and {\bf 1}, respectively. The diagram on the right shows spike trains for A and B. Given the post-synaptic filter, $h(t)$, plotted below, {\bf draw the net input current entering neuron C in the white box}.
+
+\begin{center}
+\includegraphics[height=0.9\textwidth]{figures/filtered_spike_train1.pdf}
+%\includegraphics[height=0.5\textheight]{figures_a/filtered_spike_train_solution.pdf}
+\end{center}
+
+\vspace{1cm}
+\hrule
+
+\section*{What to submit}
+The drawing of your input current and how you got to that solution. 
+
+\clearpage
+{\Large \bf Question 3: Error Backpropagation and Loss Functions (50 pts)}
+
+\textbf{Getting Started: }
+%
+%Note that your code will also be assessed for its {\bf readability} and {\bf documentation} \marks{1}. Think about how you can make your code easier for someone else to understand. Organize your code with your peers in mind, and comment your code to help them.
+%
+%The following questions ask you to edit come classes. When doing so, you may introduce class member variables if it makes your code more efficient.
+Download the notebook \verb+a02q23_YOU.ipynb+ and the module \verb+utils.py+. The notebook imports and uses the \verb+utils+ module, and also has a number of class definitions that you will use and modify.
+%Note that you will be using the \verb+Logistic+ and \verb+CrossEntropy+ classes that you (hopefully) completed in the previous exercises.
+
+{\bf Important:} All \verb+import+ commands should appear in the same code cell (at the top of the notebook). Also, do not include any other lines of code in the code cells that contain function definitions or class definitions.
+
+
+\section*{Part 1: Activation and Loss Functions}
+
+\textbf{[20 pts]} The notebook has a definition for a classed called \verb+Operation+; it is an abstract base class from which activation functions and loss functions are derived. There are other classes derived from \verb+Operation+, including the activation functions \verb+Identity+ and \verb+Softmax+, and loss functions \verb+MSE+ and \verb+CategoricalCE+.
+
+To use these classes, you first create an instance of the class, and then use that instance as the function. For example, suppose you have input currents stored in \verb+z+. Then, you can use the \verb+Identity+ class like this:
+\begin{verbatim}
+    act = Identity()          # Creates function
+    h = act(z)                # Calls function
+    dhdz = act.derivative()   # Gets derivative
+\end{verbatim}
+
+\begin{enumerate}[(a)]
+\item Complete the \verb+Logistic+ class, which is an implementation of the logistic activation function. You should complete its \verb+__call__+ function, as well as its \verb+derivative+ function.
+
+\item Complete the  \verb+CrossEntropy+ class, which is an implementation of the cross-entropy loss function. You should complete its \verb+__call__+ function, as well as its \verb+derivative+ function.
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+\section*{Part 2: Implementing Backpropagation}
+
+%By this time, you should have done the Exercises for week 2. If not, go and do them now. ... I'll wait.
+
+
+\textbf{[30 pts]} In this question, you will complete the implementation of learning by error backpropagation. In doing so, you will complete the functions \verb+backprop+ and \verb+learn+ in the \verb+Network+ class. If you've done it correctly, you can use your code to learn to classify the \verb+UClasses+ dataset in the notebook. And that will make you feel happy inside.
+
+Here are the specific tasks:
+\begin{enumerate}[(a)]
+
+\item \verb+backprop+: {\bf Complete the \verb+Network.backprop+ function}, which performs an update to the network weights and biases using the error backpropagation algorithm. The method uses the {\bf current (saved) network state}, including the activities of the output layer, and compares them to the targets.
+
+You should assume that all layers after the input layer are of the \verb+DenseLayer+ class.
+
+You should use the \verb+derivative+ methods of the loss function and activation functions.
+
+\item \verb+learn+: {\bf Complete the \verb+Network.learn+ function}, which tries to find the optimal network weights and biases. This function should call \verb+backprop+ to update the weights and biases.
+
+\end{enumerate}
+
+
+There is some code at the end of the notebook that creates a network, adds some layers, and then calls the \verb+learn+ function to train it on the dataset. Your implementation should be able to achieve over 98\% accuracy in about 5000 epochs.
+
+
+\vspace{1cm}
+%\vfill
+
+\hrule
+
+\section*{What to submit}
+Your jupyter notebook, obviously.
+
+Make sure you submit your \underline{solutions}, and not just a copy of the supplied skeleton code. We suggest you rename the \verb+ipynb+ file by replacing ``\verb+YOU+'' with your WatIAM ID (eg.~\verb+a02q23_jorchard.ipynb+). You should {\bf not} submit \verb+utils.py+. 
+
+
+
+
+
+
+%\bigskip
+
+\end{document}
